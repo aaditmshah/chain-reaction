@@ -14,17 +14,18 @@ addEventListener("DOMContentLoaded", function () {
     const channel = new MessageChannel;
 
     const audio = {
-        add1:     new Audio("audio/add.ogg"),
-        add2:     new Audio("audio/add.ogg"),
-        add3:     new Audio("audio/add.ogg"),
-        add4:     new Audio("audio/add.ogg"),
-        add5:     new Audio("audio/add.ogg"),
-        add6:     new Audio("audio/add.ogg"),
-        add7:     new Audio("audio/add.ogg"),
-        add8:     new Audio("audio/add.ogg"),
-        split1:   new Audio("audio/split.ogg"),
-        split2:   new Audio("audio/split.ogg"),
-        gameover: new Audio("audio/gameover.ogg")
+        add1:    new Audio("audio/add.ogg"),
+        add2:    new Audio("audio/add.ogg"),
+        add3:    new Audio("audio/add.ogg"),
+        add4:    new Audio("audio/add.ogg"),
+        add5:    new Audio("audio/add.ogg"),
+        add6:    new Audio("audio/add.ogg"),
+        add7:    new Audio("audio/add.ogg"),
+        add8:    new Audio("audio/add.ogg"),
+        split1:  new Audio("audio/split.ogg"),
+        split2:  new Audio("audio/split.ogg"),
+        defeat:  new Audio("audio/defeat.ogg"),
+        victory: new Audio("audio/victory.ogg")
     };
 
     worker.postMessage({ type: "boot", player, phase, board, atoms, monaco: channel.port1 }, [channel.port1]);
@@ -47,7 +48,7 @@ addEventListener("DOMContentLoaded", function () {
             split = 3 - split;
         } else if (sound) audio[sound].play();
 
-        if (sound === "gameover") {
+        if (sound === "defeat" || sound === "victory") {
             worker.terminate();
             monaco.terminate();
             animate = false;

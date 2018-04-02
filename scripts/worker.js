@@ -174,8 +174,8 @@ addEventListener("message", function (event) {
                 if (--keyframes === 0) {
                     const copy = atoms.splice(0);
                     for (const {x, y} of copy) addAtom(x, y);
-                    if (player === 0 && board.every(x => x >= 0)) sound = "gameover";
-                    else if (player === 1 && board.every(x => x <= 0)) sound = "gameover";
+                    if (player === 0 && board.every(x => x >= 0)) sound = "victory";
+                    else if (player === 1 && board.every(x => x <= 0)) sound = "defeat";
                     else if (keyframes > 0) sound = "split";
                     else switchPlayer();
                 }
