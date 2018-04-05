@@ -26,8 +26,6 @@ const addAtom = (x, y, post = false) => {
     const i = Math.floor(y / 80);
     const k = 5 * i + j;
 
-    if (post) monaco.postMessage({ type: "update", move: 1 << k });
-
     const point = board[k];
 
     const betweenX = j > 0 && j < 4;
@@ -51,6 +49,7 @@ const addAtom = (x, y, post = false) => {
             }
 
             postMessage({ player, phase, board, atoms, sound });
+            monaco.postMessage({ type: "update", move: 1 << k });
         } else if (player === 1 && point <= 0) {
             var sound = null;
 
@@ -65,6 +64,7 @@ const addAtom = (x, y, post = false) => {
             }
 
             postMessage({ player, phase, board, atoms, sound });
+            monaco.postMessage({ type: "update", move: 1 << k });
         }
     } else if (player === 0) {
         if (point >= 0) {
