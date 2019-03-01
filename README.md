@@ -1,3 +1,3 @@
-# [Mini Chain Reaction](http://aaditmshah.github.io/mini-chain-reaction) #
+# [Mini Chain Reaction](http://aaditmshah.github.io/chain-reaction) #
 
-A proof of concept mini chain reaction game engine.
+A playable Monte Carlo tree search based AI for chain reaction.
