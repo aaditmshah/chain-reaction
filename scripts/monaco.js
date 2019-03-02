@@ -119,58 +119,60 @@ addEventListener("message", function (event) {
 
     channel.port2.addEventListener("message", function () {
         if (playouts < 1000000) {
-            playouts++;
+            for (let i = 0; i < 10000; i++) {
+                playouts++;
 
-            var node = tree;
+                var node = tree;
 
-            var color = 0;
+                var color = 0;
 
-            const list = [[], []];
+                const list = [[], []];
 
-            while (node.moves.length === 0) {
-                list[color].push(node);
-                color = 1 - color;
-                const N = node.n++;
+                while (node.moves.length === 0) {
+                    list[color].push(node);
+                    color = 1 - color;
+                    const N = node.n++;
 
-                let best, value = 0;
+                    let best, value = 0;
 
-                for (const [m, child] of node.children) {
-                    const val = child.w / child.n + c * Math.sqrt(Math.log(N) / child.n);
+                    for (const [m, child] of node.children) {
+                        const val = child.w / child.n + c * Math.sqrt(Math.log(N) / child.n);
 
-                    if (val > value) {
-                        value = val;
-                        best  = child;
+                        if (val > value) {
+                            value = val;
+                            best  = child;
+                        }
                     }
+
+                    node = best;
                 }
 
-                node = best;
-            }
-
-            list[color].push(node);
-            color = 1 - color;
-            node.n++;
-
-            if (node.lost) {
-                for (const node of list[1 - color]) node.w++;
-                return channel.port1.postMessage(null);
-            }
-
-            const [move] = node.moves.splice(Math.floor(node.moves.length * Math.random()), 1);
-            const child  = getChild(node.x, node.y, node.z, move);
-
-            node.children.set(move, child);
-            list[color].push(node = child);
-            color = 1 - color;
-            node.n++;
-
-            while (!node.lost) {
-                const moves = getMoves(node.x, node.y, node.z);
-                const move  = moves[Math.floor(moves.length * Math.random())];
-                node  = playMove(node.x, node.y, node.z, move);
+                list[color].push(node);
                 color = 1 - color;
-            }
+                node.n++;
 
-            for (const node of list[1 - color]) node.w++;
+                if (node.lost) {
+                    for (const node of list[1 - color]) node.w++;
+                    continue;
+                }
+
+                const [move] = node.moves.splice(Math.floor(node.moves.length * Math.random()), 1);
+                const child  = getChild(node.x, node.y, node.z, move);
+
+                node.children.set(move, child);
+                list[color].push(node = child);
+                color = 1 - color;
+                node.n++;
+
+                while (!node.lost) {
+                    const moves = getMoves(node.x, node.y, node.z);
+                    const move  = moves[Math.floor(moves.length * Math.random())];
+                    node  = playMove(node.x, node.y, node.z, move);
+                    color = 1 - color;
+                }
+
+                for (const node of list[1 - color]) node.w++;
+            }
         }
 
         channel.port1.postMessage(null);
