@@ -7,6 +7,10 @@ addEventListener("DOMContentLoaded", function () {
     var split   = 1;
     var animate = true;
 
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("sw.js");
+    }
+
     const canvas  = document.querySelector("canvas");
     const context = canvas.getContext("2d");
     const worker  = new Worker("scripts/worker.js");
