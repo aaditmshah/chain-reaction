@@ -58,6 +58,7 @@ addEventListener("DOMContentLoaded", function () {
     canvas.addEventListener("click", function (event) {
         const {offsetX, offsetY} = event;
         worker.postMessage({ type: "click", offsetX, offsetY });
+        event.preventDefault();
     });
 
     const red   = "#B22222";
