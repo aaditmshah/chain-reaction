@@ -4,8 +4,10 @@
         <meta charset="UTF-8"/>
         <title>Chain Reaction</title>
         <link rel="icon" href="favicon.png"/>
-        <link rel="stylesheet" href="styles/index.css"/>
-        <script src="scripts/index.js"></script>
+        <link rel="stylesheet" href="styles/index.css" media="all"/>
+        <link rel="preload" href="scripts/worker.js" as="script"/>
+        <link rel="preload" href="scripts/monaco.js" as="script"/>
+        <script defer src="scripts/index.js"></script>
     </head>
     <body>
         <canvas width="400" height="400"></canvas>
